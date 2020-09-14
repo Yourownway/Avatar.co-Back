@@ -1,0 +1,11 @@
+
+{
+  "development": {
+    "username": "root",
+    "password": "ribs",
+    "database": "database_sport.co",
+    "host": "localhost",
+    "port": "3306",
+    "dialect": "mysql"
+  }
+}
