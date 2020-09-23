@@ -1,7 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const security = require("../middleware/checkToken");
 const userCtrl = require("../controllers/userCtrl");
+const security = require("../middleware/checkToken");
+
 const { verifyToken } = require("../middleware/checkToken");
 
 router.get(

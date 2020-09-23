@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       Post.belongsTo(models.User);
       Post.belongsTo(models.Parc);
+      Post.belongsTo(models.category);
     }
   }
   Post.init(

@@ -56,6 +56,10 @@ module.exports = {
       return res
         .status(200)
         .json({ proflil: `'profil de ${updateProfil.firstName} modifié'` });
+    } else {
+      return res
+        .status(500)
+        .json({ err: "500 ressource non trouvé userCtrl.editPorfil" });
     }
   },
   deleteProfil: async (req, res) => {
