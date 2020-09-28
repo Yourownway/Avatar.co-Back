@@ -11,7 +11,7 @@ router.get(
 
   userCtrl.getUserProfil
 );
-router.patch("/profil/:id/edit", security.verifyToken, userCtrl.editProfil);
+router.patch("/profil/:id/edit", /*security.verifyToken,*/ userCtrl.editProfil);
 router.delete(
   "/profil/:id/delete",
   security.verifyToken,

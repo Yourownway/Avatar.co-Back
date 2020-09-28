@@ -1,21 +1,25 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-
-    await queryInterface.bulkInsert('Users', [{
-       userEmail: 'lolo',
-       firstName: 'lolo',
-       lastName:'lolo',
-       userPassword:'lolo',	
-       UserRole:'coach',
-      UserPirvate: true,
-      UserRank: '1' ,
-      UserDescription: 'sss',
-      // createdAt: Date.UTC(),
-      // updatedAt:Date.UTC(),
-      }], {});
-    
+    await queryInterface.bulkInsert(
+      "Users",
+      [
+        {
+          userEmail: "lolo",
+          firstName: "lolo",
+          lastName: "lolo",
+          userPassword: "lolo",
+          UserRole: "coach",
+          UserPrivate: "yes",
+          UserRank: "1",
+          UserDescription: "sss",
+          // createdAt: Date.UTC(),
+          // updatedAt:Date.UTC(),
+        },
+      ],
+      {}
+    );
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -25,5 +29,5 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
+  },
 };

@@ -1,5 +1,6 @@
 const models = require("../models");
 const ls = require("local-storage");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   getUserProfil: async (req, res) => {
@@ -32,22 +33,19 @@ module.exports = {
   editProfil: async (req, res) => {
     const userId = req.params.id;
 
-    const dataProfil = await models.User.update(req.body, {
-      attributes: [
-        "id",
-        "firstName",
-        "lastName",
-        "userEmail",
-        "userRole",
-        "userPirvate",
-        "userRank",
-        "userDescription",
-      ],
-      where: { id: userId },
-    });
-
-    if (dataProfil) {
-      const updateProfil = await models.User.findOne({
+    bcrypt.hash(req.body.userPassword, 5, async function (err, hash) {
+      req.body.userPassword = hash;
+      const updateProfil = await models.User.update(req.body, {
+        attributes: [
+          "id",
+          "firstName",
+          "lastName",
+          "userEmail",
+          "userRole",
+          "userPirvate",
+          "userRank",
+          "userDescription",
+        ],
         where: { id: userId },
       });
 
@@ -55,12 +53,8 @@ module.exports = {
       console.log("localstorage", ls);
       return res
         .status(200)
-        .json({ proflil: `'profil de ${updateProfil.firstName} modifié'` });
-    } else {
-      return res
-        .status(500)
-        .json({ err: "500 ressource non trouvé userCtrl.editPorfil" });
-    }
+        .json({ proflil: `profil de ${req.body.firstName} modifié` });
+    });
   },
   deleteProfil: async (req, res) => {
     const userId = req.params.id;

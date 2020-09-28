@@ -18,13 +18,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Event.init(
     {
-      // userId: DataTypes.INTEGER,
-      // postId: DataTypes.INTEGER,
       eventValidation: DataTypes.BOOLEAN,
       eventCurrentGuest: DataTypes.INTEGER,
       eventStatus: DataTypes.BOOLEAN,
-      userRate: DataTypes.INTEGER,
-      userComment: DataTypes.STRING,
+      eventRate: DataTypes.INTEGER,
+      eventComment: DataTypes.STRING,
     },
     {
       sequelize,

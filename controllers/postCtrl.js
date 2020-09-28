@@ -86,4 +86,10 @@ module.exports = {
       return res.status(404).json({ err: "post deja supprimé" });
     }
   },
+
+  getPostByParc: (idParc) => {
+    return Parcs.findAll({
+      where: { idParc: idParc },
+    });
+  },
 };

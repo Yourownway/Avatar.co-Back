@@ -39,8 +39,9 @@ module.exports = {
       bcrypt.hash(user.userPassword, 5, async function (err, hash) {
         user.userPassword = hash;
         const newUser = await models.User.create(user);
-        if (newUser) return res.status(200).json(newUser);
-        else {
+        if (newUser) {
+          res.status(200).json(newUser);
+        } else {
           console.log(err);
           return res
             .status(500)
@@ -69,8 +70,16 @@ module.exports = {
         if (result) {
           ls.set("firstName", userFound.firstName);
           console.log("localstorage", ls.get("firstName"));
+          console.log("found", userFound);
           return res.status(200).json({
             userId: userFound.id,
+            firstName: userFound.firstName,
+            lastName: userFound.lastName,
+            userEmail: userFound.userEmail,
+            userRole: userFound.userRole,
+            userDescription: userFound.userDescription,
+            userPirvate: userFound.userPrivate,
+            userRank: userFound.userRank,
             Token: jwtUtils.generateTokenForUser(userFound),
           });
         }
