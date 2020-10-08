@@ -22,10 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Post.init(
     {
-      // parcId: DataTypes.INTEGER,
-      // userId: DataTypes.INTEGER,
       postName: DataTypes.STRING,
-      postCategory: DataTypes.STRING,
       postUserRole: DataTypes.STRING,
       postDescription: DataTypes.STRING,
       postDate: DataTypes.DATE,

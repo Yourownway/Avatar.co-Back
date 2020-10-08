@@ -1,0 +1,18 @@
+POST
+
+
+delete post role , 
+
+
+organisé les post par date du jour 
+
+Post par pertinance: 
+
+un utilisateur a une note  USER TABLE
+
+trié les poste par rapport au donné de l'utilisateur (userRank) 
+
+
+
+
+comment dire a sequelize si l'utilisateur a deja crée un post 

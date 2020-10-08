@@ -5,6 +5,11 @@ const security = require("../middleware/checkToken");
 
 const { verifyToken } = require("../middleware/checkToken");
 
+router.get("/checkToken", verifyToken, (req, res) => {
+  console.log("ca marche");
+  res.send("Token verifié ");
+});
+
 router.get(
   "/profil/:id",
   verifyToken,

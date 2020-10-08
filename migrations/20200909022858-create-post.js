@@ -35,9 +35,6 @@ module.exports = {
       postName: {
         type: Sequelize.STRING,
       },
-      postCategory: {
-        type: Sequelize.STRING,
-      },
       postUserRole: {
         type: Sequelize.STRING,
       },

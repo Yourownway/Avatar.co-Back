@@ -6,6 +6,7 @@ const user = require("./userRoutes");
 const post = require("./postRoutes");
 const event = require("./eventRoutes");
 const parc = require("./parcRoutes");
+const categorie = require("./categorieRoutes");
 
 router.get("/", (req, res) => {
   res.send("hello");
@@ -15,5 +16,6 @@ router.use(user);
 router.use(post);
 router.use(event);
 router.use(parc);
+router.use(categorie);
 
 module.exports = router;

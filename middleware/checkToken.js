@@ -15,7 +15,9 @@ module.exports = {
     } else {
       jwt.verify(bearerToken, JWT_SIGN_SECRET, (err, user) => {
         if (err) {
-          return res.status(403).json({ err: "403: accès refusé" });
+          return res
+            .status(403)
+            .json({ err: "403: accès refusé token invalide" });
         } else {
           req.user = user;
           // securisation des route /:id
