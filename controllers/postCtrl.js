@@ -47,6 +47,15 @@ module.exports = {
           },
         ],
       });
+
+      const creatEvent = await models.Event.create({
+        postId: displayPost.id,
+        userId,
+      });
+      if (!creatEvent) {
+        return res.status(500).json({ err: "creatEvent" });
+      }
+
       if (displayPost) {
         return res.status(200).json(displayPost);
       }

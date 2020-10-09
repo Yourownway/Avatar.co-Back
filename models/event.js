@@ -12,15 +12,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.User);
-      this.belongsTo(models.Post);
+
+         Event.belongsToMany(models.User, {
+        through: "eventId",
+        as: "eventuser",
+        foreignKey: "userId",
+      });
+    }
+  }
     }
   }
   Event.init(
     {
       eventValidation: DataTypes.BOOLEAN,
       eventCurrentGuest: DataTypes.INTEGER,
-      eventStatus: DataTypes.BOOLEAN,
+      eventIsUserCreate: DataTypes.BOOLEAN,
       eventRate: DataTypes.INTEGER,
       eventComment: DataTypes.STRING,
     },

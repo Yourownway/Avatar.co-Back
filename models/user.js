@@ -11,8 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Post, {
         foreignKey: { name: "userId", allowNull: false },
       });
-      User.hasMany(models.Event, {
-        foreignKey: { name: "userId", allowNull: false },
+      // User.hasMany(models.Event, {
+      //   foreignKey: { name: "userId", allowNull: false },
+      // });
+      User.belongsToMany(models.Event, {
+        through: "userId",
+        as: "eventuser",
+        foreignKey: "eventId",
       });
     }
   }
