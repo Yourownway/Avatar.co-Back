@@ -47,6 +47,11 @@ module.exports = {
       postMaxGuest: {
         type: Sequelize.INTEGER,
       },
+      postBadgeRequired: {
+        allowNul: true,
+        type: Sequelize.INTEGER,
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

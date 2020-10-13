@@ -8,35 +8,27 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      // userId: {
-      //   type: Sequelize.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: "Users",
-      //     key: "id",
-      //   },
-      // },
-      // postId: {
-      //   type: Sequelize.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: "Posts", // 'Movies' would also work
-      //     key: "id",
-      // //   },
-      // },
-      eventIsUserCreate: {
-        type: Sequelize.BOOLEAN,
+      userId: {
+        type: Sequelize.INTEGER,
+        references: { model: "Users", key: "id" },
+        onDelete: "CASCADE",
+        allowNull: false,
       },
-      eventCurrentGuest: {
+      postId: {
+        references: { model: "Posts", key: "id" },
+        onDelete: "CASCADE",
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
-      eventStatus: {
+      eventIsAdmin: {
         type: Sequelize.BOOLEAN,
       },
-      userRate: {
-        type: Sequelize.INTEGER,
+      eventValidation: {
+        type: Sequelize.BOOLEAN,
       },
-      userComment: {
+      eventComment: {
+        defaultValue: null,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       createdAt: {

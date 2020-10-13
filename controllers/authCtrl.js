@@ -14,7 +14,6 @@ module.exports = {
       userPassword,
       userRole,
       userPirvate,
-      userRank,
       userDescription,
     } = req.body);
 
@@ -79,7 +78,6 @@ module.exports = {
             userRole: userFound.userRole,
             userDescription: userFound.userDescription,
             userPirvate: userFound.userPrivate,
-            userRank: userFound.userRank,
             Token: jwtUtils.generateTokenForUser(userFound),
           });
         }

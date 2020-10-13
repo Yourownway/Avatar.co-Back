@@ -16,6 +16,11 @@ module.exports = {
           updatedAt: "2018-07-22 00:00:00",
         },
         {
+          parcName: "Bois de Vincennes",
+          createdAt: "2018-07-22 00:00:00",
+          updatedAt: "2018-07-22 00:00:00",
+        },
+        {
           parcName: "Parc des Buttes Chaumont",
           createdAt: "2018-07-22 00:00:00",
           updatedAt: "2018-07-22 00:00:00",
@@ -27,6 +32,16 @@ module.exports = {
         },
         {
           parcName: "Parc Monceau",
+          createdAt: "2018-07-22 00:00:00",
+          updatedAt: "2018-07-22 00:00:00",
+        },
+        {
+          parcName: "Workout Bercy",
+          createdAt: "2018-07-22 00:00:00",
+          updatedAt: "2018-07-22 00:00:00",
+        },
+        {
+          parcName: "Natation à Montrouge",
           createdAt: "2018-07-22 00:00:00",
           updatedAt: "2018-07-22 00:00:00",
         },

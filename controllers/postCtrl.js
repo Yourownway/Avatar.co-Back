@@ -22,7 +22,14 @@ module.exports = {
     }
     const newPost = await models.Post.create(post);
 
-    if (newPost) {
+    const newEvent = await models.Event.create({
+      postId: newPost.id,
+      userId: newPost.userId,
+      eventIsAdmin: true,
+      eventValidation: true,
+    });
+
+    if (newPost && newEvent) {
       const displayPost = await models.Post.findByPk(newPost.id, {
         attributes: [
           "id",
@@ -34,6 +41,10 @@ module.exports = {
         ],
         include: [
           {
+            model: models.Event,
+            attributes: ["userId"],
+          },
+          {
             model: models.Parc,
             attributes: ["parcName"],
           },
@@ -43,18 +54,10 @@ module.exports = {
           },
           {
             model: models.User,
-            attributes: ["firstName", "lastName", "userEmail", "userRank"],
+            attributes: ["firstName", "lastName", "userEmail"],
           },
         ],
       });
-
-      const creatEvent = await models.Event.create({
-        postId: displayPost.id,
-        userId,
-      });
-      if (!creatEvent) {
-        return res.status(500).json({ err: "creatEvent" });
-      }
 
       if (displayPost) {
         return res.status(200).json(displayPost);
@@ -62,15 +65,6 @@ module.exports = {
     } else {
       console.log("erreur postCtrl create post");
     }
-
-    // return res.status(200).json(newPost);
-    // else {
-    //   console.log(err);
-    //   return res.status(500).json({
-    //     error:
-    //       "500: création du post impossible impossible postCtrl.createPost",
-    //   });
-    // }
   },
 
   getOnePost: async (req, res) => {
@@ -105,6 +99,7 @@ module.exports = {
     const postAll = await models.Post.findAll({
       attributes: [
         "id",
+        "userId",
         "postName",
         "postUserRole",
         "postDescription",
@@ -122,7 +117,7 @@ module.exports = {
         },
         {
           model: models.User,
-          attributes: ["firstName", "lastName", "userEmail", "userRank"],
+          attributes: ["firstName", "lastName", "userEmail"],
         },
       ],
     });
@@ -158,7 +153,7 @@ module.exports = {
         },
         {
           model: models.User,
-          attributes: ["firstName", "lastName", "userEmail", "userRank"],
+          attributes: ["firstName", "lastName", "userEmail"],
         },
       ],
     });
@@ -194,7 +189,7 @@ module.exports = {
         },
         {
           model: models.User,
-          attributes: ["firstName", "lastName", "userEmail", "userRank"],
+          attributes: ["firstName", "lastName", "userEmail"],
         },
       ],
     });
@@ -248,7 +243,7 @@ module.exports = {
     });
   },
   getUserPost: async (req, res) => {
-    const userId = req.body.userId;
+    const { userId } = req.body;
     const UserPost = await models.Post.findAll({
       limit: 8,
       where: { userId },

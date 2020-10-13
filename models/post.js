@@ -18,8 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.User);
       Post.belongsTo(models.Parc);
       Post.belongsTo(models.category);
+      Post.belongsToMany(models.User, {
+        through: "Event",
+        foreignKey: "postId",
+      });
     }
   }
+
   Post.init(
     {
       postName: DataTypes.STRING,
@@ -27,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       postDescription: DataTypes.STRING,
       postDate: DataTypes.DATE,
       postMaxGuest: DataTypes.INTEGER,
+      postBadgeRequired: DataTypes.INTEGER,
     },
     {
       sequelize,

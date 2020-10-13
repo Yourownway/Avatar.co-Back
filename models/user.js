@@ -14,10 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       // User.hasMany(models.Event, {
       //   foreignKey: { name: "userId", allowNull: false },
       // });
-      User.belongsToMany(models.Event, {
-        through: "userId",
-        as: "eventuser",
-        foreignKey: "eventId",
+      User.belongsToMany(models.Post, {
+        through: "Event",
+        foreignKey: "userId",
       });
     }
   }
@@ -27,9 +26,9 @@ module.exports = (sequelize, DataTypes) => {
       lastName: DataTypes.STRING,
       userEmail: DataTypes.STRING,
       userPassword: DataTypes.STRING,
-      userRole: DataTypes.STRING,
-      userPrivate: DataTypes.STRING,
-      userRank: DataTypes.INTEGER,
+      userPrivate: DataTypes.BOOLEAN,
+      userBadge: DataTypes.INTEGER,
+      userXp: DataTypes.INTEGER,
       userDescription: DataTypes.STRING,
     },
     {

@@ -24,15 +24,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      userRole: {
-        type: Sequelize.STRING,
+      userBadge: {
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       userPrivate: {
-        type: Sequelize.STRING,
+        type: Sequelize.BOOLEAN,
         allowNull: true,
       },
-      userRank: {
+      userXp: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
