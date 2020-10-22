@@ -97,6 +97,7 @@ module.exports = {
   },
   getAllPost: async (req, res) => {
     const postAll = await models.Post.findAll({
+      order: [["postDate", "DESC"]],
       attributes: [
         "id",
         "userId",
@@ -117,7 +118,12 @@ module.exports = {
         },
         {
           model: models.User,
-          attributes: ["firstName", "lastName", "userEmail"],
+          attributes: ["firstName", "lastName", "userEmail", "id"],
+        },
+        {
+          model: models.Event,
+          attributes: ["userId"],
+          where: { eventValidation: true },
         },
       ],
     });
@@ -130,41 +136,6 @@ module.exports = {
     }
   },
 
-  getAllPostByDate: async (req, res) => {
-    const postAll = await models.Post.findAll({
-      limit: 8,
-      order: [["postDate", "DESC"]],
-      attributes: [
-        "id",
-        "postName",
-        "postUserRole",
-        "postDescription",
-        "postDate",
-        "postMaxGuest",
-      ],
-      include: [
-        {
-          model: models.Parc,
-          attributes: ["parcName"],
-        },
-        {
-          model: models.category,
-          attributes: ["categoryName"],
-        },
-        {
-          model: models.User,
-          attributes: ["firstName", "lastName", "userEmail"],
-        },
-      ],
-    });
-    if (postAll) {
-      res.status(200).json({ post: postAll });
-    } else {
-      res
-        .status(500)
-        .json({ err: "500 il n'y a pas de post postCtrl.postAll" });
-    }
-  },
   getPostByCategory: async (req, res) => {
     const categoryId = req.params.id;
     const postAll = await models.Post.findAll({

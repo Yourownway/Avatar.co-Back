@@ -17,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
       //     as: "eventuser",
       //     foreignKey: "userId",
       //   });
+      Event.belongsTo(models.User);
+      Event.belongsTo(models.Post);
     }
   }
 
@@ -25,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       eventValidation: DataTypes.BOOLEAN,
       eventComment: DataTypes.STRING,
       eventIsAdmin: DataTypes.BOOLEAN,
+      eventRequest: DataTypes.BOOLEAN,
     },
     {
       sequelize,

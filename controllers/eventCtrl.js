@@ -9,14 +9,15 @@ module.exports = {
     if (checkRequest) {
       res.status(500).json({ err: "La requette a deja été faite" });
     } else {
-      const postRequest = await models.Event.create({
+      const newEventRequest = await models.Event.create({
         userId,
         postId,
         eventValidation: false,
         eventIsAdmin: false,
+        eventRequest: true,
       });
-      if (postRequest) {
-        res.status(200).json({ event: postRequest });
+      if (newEventRequest) {
+        res.status(200).json({ event: newEventRequest });
       }
     }
   },
@@ -32,9 +33,7 @@ module.exports = {
         {
           model: models.User,
 
-          through: {
-            attributes: ["firstName"],
-          },
+          attributes: ["firstName"],
         },
       ],
     });
@@ -43,4 +42,15 @@ module.exports = {
       res.status(200).json({ UserRequests: getUserRequest });
     }
   },
+
+  getAllEvent: async (req, res) => {
+    const Events = await models.Event.findAll({
+      where: { eventIsAdmin: false },
+    });
+    if (Events) return res.status(200).json({ Events });
+  },
+  editEvent: async (req, res) => {},
+
+  deleteEvent: async (req, res) => {},
+  deleteEventRequest: async (req, res) => {},
 };

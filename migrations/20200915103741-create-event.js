@@ -26,6 +26,10 @@ module.exports = {
       eventValidation: {
         type: Sequelize.BOOLEAN,
       },
+      eventRequest: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       eventComment: {
         defaultValue: null,
         allowNull: true,

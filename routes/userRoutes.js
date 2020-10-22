@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const userCtrl = require("../controllers/userCtrl");
-const security = require("../middleware/checkToken");
 
 const { verifyToken } = require("../middleware/checkToken");
 
@@ -12,15 +11,11 @@ router.get("/checkToken", verifyToken, (req, res) => {
 
 router.get(
   "/profil/:id",
-  verifyToken,
+  // verifyToken,
 
   userCtrl.getUserProfil
 );
 router.patch("/profil/:id/edit", /*security.verifyToken,*/ userCtrl.editProfil);
-router.delete(
-  "/profil/:id/delete",
-  security.verifyToken,
-  userCtrl.deleteProfil
-);
+router.delete("/profil/:id/delete", verifyToken, userCtrl.deleteProfil);
 
 module.exports = router;

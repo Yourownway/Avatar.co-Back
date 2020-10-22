@@ -9,9 +9,9 @@ module.exports = {
     const bearerHeader = req.headers["authorization"];
     const bearerToken = bearerHeader.split(" ")[1];
     if (typeof bearerToken == "undefined" && bearerToken == null) {
-      return (res.status(401).jso(req, res, next) = n({
+      return (res.status(401).jso(req, res, next) = {
         err: "401: utilisateur non authentifié",
-      }));
+      });
     } else {
       jwt.verify(bearerToken, JWT_SIGN_SECRET, (err, user) => {
         if (err) {

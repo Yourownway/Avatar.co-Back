@@ -9,13 +9,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasMany(models.Post, {
-        foreignKey: { name: "userId", allowNull: false },
+        foreignKey: {
+          name: "userId",
+          allowNull: false,
+        },
       });
       // User.hasMany(models.Event, {
       //   foreignKey: { name: "userId", allowNull: false },
       // });
+
+      //Super Many-to-Many
       User.belongsToMany(models.Post, {
         through: "Event",
+        foreignKey: "userId",
+      });
+      User.hasMany(models.Event, {
         foreignKey: "userId",
       });
     }

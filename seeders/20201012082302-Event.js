@@ -24,7 +24,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: "6",
+          userId: "5",
           postId: "3",
           eventisAdmin: true,
           eventValidation: true,
@@ -52,9 +52,18 @@ module.exports = {
         },
         {
           userId: "6",
-          postId: "2",
+          postId: "6",
           eventisAdmin: true,
           eventValidation: true,
+          eventComment: "",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: "1",
+          postId: "6",
+          eventisAdmin: false,
+          eventValidation: false,
           eventComment: "",
           createdAt: new Date(),
           updatedAt: new Date(),

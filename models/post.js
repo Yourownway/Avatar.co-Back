@@ -8,19 +8,22 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Post.hasMany(models.Event, {
-        foreignKey: {
-          name: "postId",
-          allowNull: false,
-          type: DataTypes.INTEGER,
-        },
-      });
       Post.belongsTo(models.User);
       Post.belongsTo(models.Parc);
       Post.belongsTo(models.category);
+
+      //Super Many-to-Many
       Post.belongsToMany(models.User, {
         through: "Event",
         foreignKey: "postId",
+      });
+      Post.hasMany(models.Event, {
+        foreignKey: "postId",
+        allowNull: false,
+        references: {
+          model: "Posts",
+          key: "id",
+        },
       });
     }
   }

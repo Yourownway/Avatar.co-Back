@@ -67,15 +67,13 @@ module.exports = {
         result
       ) {
         if (result) {
-          ls.set("firstName", userFound.firstName);
-          console.log("localstorage", ls.get("firstName"));
-          console.log("found", userFound);
           return res.status(200).json({
             userId: userFound.id,
             firstName: userFound.firstName,
             lastName: userFound.lastName,
             userEmail: userFound.userEmail,
-            userRole: userFound.userRole,
+            userBadge: userFound.userBadge,
+            userXp: userFound.userXp,
             userDescription: userFound.userDescription,
             userPirvate: userFound.userPrivate,
             Token: jwtUtils.generateTokenForUser(userFound),
