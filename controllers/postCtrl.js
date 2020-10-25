@@ -27,6 +27,7 @@ module.exports = {
       userId: newPost.userId,
       eventIsAdmin: true,
       eventValidation: true,
+      eventRequest: true,
     });
 
     if (newPost && newEvent) {
@@ -98,9 +99,9 @@ module.exports = {
   getAllPost: async (req, res) => {
     const postAll = await models.Post.findAll({
       order: [["postDate", "DESC"]],
+      raw: true,
       attributes: [
         "id",
-        "userId",
         "postName",
         "postUserRole",
         "postDescription",
@@ -110,11 +111,11 @@ module.exports = {
       include: [
         {
           model: models.Parc,
-          attributes: ["parcName"],
+          attributes: ["parcName", "id"],
         },
         {
           model: models.category,
-          attributes: ["categoryName"],
+          attributes: ["categoryName", "id"],
         },
         {
           model: models.User,
@@ -122,8 +123,8 @@ module.exports = {
         },
         {
           model: models.Event,
-          attributes: ["userId"],
-          where: { eventValidation: true },
+          // attributes: ["userId"],
+          // where: { eventValidation: true },
         },
       ],
     });
@@ -179,21 +180,26 @@ module.exports = {
 
   editPost: async (req, res) => {
     const postId = req.params.id;
-    const updatePost = await models.Post.update(req.body, {
-      where: { id: postId },
-    });
-    if (updatePost) {
-      const updatedPost = await models.Post.findOne({
+    try {
+      const updatePost = await models.Post.update(req.body, {
         where: { id: postId },
       });
-      console.log(updatedPost);
-      return res
-        .status(200)
-        .json({ proflil: `'post de ${updatedPost.postName} modifié'` });
-    } else {
-      return res
-        .status(500)
-        .json({ err: "500 ressource non trouvé postCtrl.editPost" });
+      if (updatePost) {
+        const updatedPost = await models.Post.findOne({
+          where: { id: postId },
+        });
+        console.log(updatedPost);
+        return res
+          .status(200)
+          .json({ proflil: `'post de ${updatedPost.postName} modifié'` });
+      } else {
+        console.log("==================+++++EDIT+++++++++++++");
+        return res
+          .status(500)
+          .json({ err: "500 ressource non trouvé postCtrl.editPost" });
+      }
+    } catch (e) {
+      console.log("editPost error", e);
     }
   },
   deletePost: async (req, res) => {
@@ -218,7 +224,38 @@ module.exports = {
     const UserPost = await models.Post.findAll({
       limit: 8,
       where: { userId },
-      order: [["postDate", "DESC"]],
+      raw: true,
+      // order: [["postDate", "DESC"]],
+
+      attributes: [
+        "id",
+
+        "postName",
+        // "postUserRole",
+        // "postDescription",
+        // "postDate",
+        // "postMaxGuest",
+      ],
+      include: [
+        // {
+        //   model: models.Parc,
+        //   attributes: ["parcName"],
+        // },
+        // {
+        //   model: models.category,
+        //   attributes: ["categoryName"],
+        // },
+        // {
+        //   model: models.User,
+        //   attributes: ["firstName", "lastName", "userEmail", "id"],
+        // },
+        {
+          model: models.Event,
+          attributes: ["userId", "eventValidation", "eventIsAdmin"],
+
+          // where: { eventValidation: true },
+        },
+      ],
     });
     if (UserPost) {
       res.status(200).json({ userPost: UserPost });
@@ -238,5 +275,19 @@ module.exports = {
     } else {
       res.status(500).json({ erreur: "il n'ya pas encore de Post" });
     }
+  },
+  getEventByPostId: async (req, res) => {
+    const postId = req.params.id;
+    const Post = await models.Post.findOne({
+      where: { id: postId },
+      include: [
+        {
+          model: models.Event,
+          // attributes: ["userId"],
+          // where: { eventValidation: true },
+        },
+      ],
+    });
+    res.status(200).json({ Post });
   },
 };

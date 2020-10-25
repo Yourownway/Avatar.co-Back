@@ -42,7 +42,7 @@ module.exports = {
           postDate: new Date(Date.UTC(2020, 11, 23, 10, 30)), //DATE
           postMaxGuest: "4", //INTEGER
           postBadgeRequired: "1000",
-          userId: "6",
+          userId: "5",
           parcId: "3",
           categoryId: "2",
           createdAt: new Date(),

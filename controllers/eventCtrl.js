@@ -53,4 +53,22 @@ module.exports = {
 
   deleteEvent: async (req, res) => {},
   deleteEventRequest: async (req, res) => {},
+
+  getUserEvent: async (req, res) => {
+    const { userId } = req.body;
+    const userEvent = await models.Event.findAll({
+      where: { userId },
+    });
+    if (userEvent) {
+      console.log("=============================");
+      res.status(200).json({ userEvent });
+    }
+  },
+  getEventByPostId: async (req, res) => {
+    const postId = req.params.id;
+    const Post = await models.Event.findAll({
+      where: { postId },
+    });
+    res.status(200).json({ Post });
+  },
 };

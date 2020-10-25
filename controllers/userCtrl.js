@@ -1,5 +1,5 @@
 const models = require("../models");
-const ls = require("local-storage");
+
 const bcrypt = require("bcrypt");
 
 module.exports = {
@@ -15,7 +15,6 @@ module.exports = {
           "userEmail",
           "userXp",
           "userBadge",
-          "userPirvate",
           "userDescription",
         ],
         where: { id: userId },
@@ -61,7 +60,6 @@ module.exports = {
       where: { id: userId },
     });
     if (deleted) {
-      ls.clear();
       return res.status(200).json({ succes: `Profil deleted` });
     } else {
       return res.status(404).json({ err: "profil deja supprimé" });

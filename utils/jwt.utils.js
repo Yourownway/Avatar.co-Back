@@ -8,11 +8,12 @@ module.exports = {
     return jwt.sign(
       {
         userId: userData.id,
+        userEmail: userData.email,
       },
-      JWT_SIGN_SECRET
-      //   {
-      //     expiresIn: "1h",
-      //   }
+      JWT_SIGN_SECRET,
+      {
+        expiresIn: "1h",
+      }
     );
   },
 

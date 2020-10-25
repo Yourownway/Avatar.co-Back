@@ -7,5 +7,7 @@ router.post("/event/validation", eventCtrl.eventGetValidation);
 router.patch("/event/update", eventCtrl.editEvent);
 router.delete("delete/event/:id", eventCtrl.deleteEvent);
 router.post("/event/request", eventCtrl.eventRequest);
-router.delete("delete/event/request/:id", eventCtrl.deleteEventRequest);
+router.delete("/delete/event/request/:id", eventCtrl.deleteEventRequest);
+router.post("/user/event", eventCtrl.getUserEvent);
+router.get("/getEvents/event/:id", eventCtrl.getEventByPostId);
 module.exports = router;

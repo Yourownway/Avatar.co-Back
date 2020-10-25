@@ -1,7 +1,6 @@
 const models = require("../models");
 const bcrypt = require("bcrypt");
 const jwtUtils = require("../utils/jwt.utils");
-const ls = require("local-storage");
 
 module.exports = {
   // recup la requette
