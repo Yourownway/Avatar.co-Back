@@ -1,6 +1,7 @@
 "use strict";
 
 const bcrypt = require("bcrypt");
+const uuid4 = require("uuid/v4");
 const password = "azerty";
 const hash = bcrypt.hashSync(password, 10);
 
@@ -10,6 +11,7 @@ module.exports = {
       "Users",
       [
         {
+          id: 10,
           userEmail: "Lorris@gmail.com",
           firstName: "Lorris",
           lastName: "Dhedin",
@@ -23,6 +25,7 @@ module.exports = {
           // updatedAt:Date.UTC(),
         },
         {
+          id: 20,
           userEmail: "Jimi@gmail.com",
           firstName: "Jimi",
           lastName: "Adelay",
@@ -36,6 +39,7 @@ module.exports = {
           // updatedAt:Date.UTC(),
         },
         {
+          id: 30,
           userEmail: "Yoram@gmail.com",
           firstName: "Yoram",
           lastName: "Taieb",
@@ -49,6 +53,7 @@ module.exports = {
           // updatedAt:Date.UTC(),
         },
         {
+          id: 40,
           userEmail: "Patrik@gmail.com",
           firstName: "Patrik",
           lastName: "Zamble-bi",
@@ -62,6 +67,7 @@ module.exports = {
           // updatedAt:Date.UTC(),
         },
         {
+          id: 50,
           userEmail: "Lucas@gmail.com",
           firstName: "Lucas",
           lastName: "Beneston",
@@ -75,6 +81,7 @@ module.exports = {
           // updatedAt:Date.UTC(),
         },
         {
+          id: 60,
           userEmail: "Yassin@gmail.com",
           firstName: "Yassin",
           lastName: "Lck",
@@ -88,6 +95,7 @@ module.exports = {
           // updatedAt:Date.UTC(),
         },
         {
+          id: 70,
           userEmail: "Coline",
           firstName: "Coline",
           lastName: "Supercool",
