@@ -123,7 +123,15 @@ module.exports = {
         },
         {
           model: models.Event,
-          // attributes: ["userId"],
+          attributes: [
+            "id",
+            "eventValidation",
+            "eventIsAdmin",
+            "eventRequest",
+            "eventComment",
+            "postId",
+            "userId",
+          ],
           // where: { eventValidation: true },
         },
       ],
@@ -283,8 +291,15 @@ module.exports = {
       include: [
         {
           model: models.Event,
-          // attributes: ["userId"],
-          // where: { eventValidation: true },
+          attributes: [
+            "id",
+            "eventValidation",
+            "eventIsAdmin",
+            "eventRequest",
+            "eventComment",
+            "postId",
+            "userId",
+          ],
         },
       ],
     });
