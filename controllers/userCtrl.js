@@ -40,18 +40,26 @@ module.exports = {
           "firstName",
           "lastName",
           "userEmail",
-          "userRole",
-          "userPirvate",
           "userDescription",
         ],
         where: { id: userId },
       });
 
-      ls.set("firstName", updateProfil.firstName);
-      console.log("localstorage", ls);
-      return res
-        .status(200)
-        .json({ proflil: `profil de ${req.body.firstName} modifié` });
+      if (updateProfil) {
+        const newProfil = await models.User.findOne({
+          where: { id: userId },
+          attributes: [
+            "id",
+            "firstName",
+            "lastName",
+            "userEmail",
+            "userDescription",
+          ],
+        });
+        if (newProfil) {
+          res.status(200).json(newProfil);
+        }
+      }
     });
   },
   deleteProfil: async (req, res) => {

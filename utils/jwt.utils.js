@@ -37,7 +37,7 @@ module.exports = {
           });
           if (userFound) {
             return res.status(200).json({
-              userId: userFound.id,
+              id: userFound.id,
               firstName: userFound.firstName,
               lastName: userFound.lastName,
               userEmail: userFound.userEmail,
