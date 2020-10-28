@@ -1,6 +1,31 @@
 const models = require("../models");
 
 module.exports = {
+  createEvent: async (req, res) => {
+    const { eventComment } = req.body;
+    const { userId, postId } = req.params;
+    const checkPost = await models.Event.findOne({
+      where: { userId, postId },
+    });
+    if (checkPost) {
+      res.status(400).json({ err: "vous avez deja envoyé un post" });
+    } else {
+      const newEvent = await models.Event.create({
+        postId,
+        userId,
+        eventIsAdmin: false,
+        eventValidation: false,
+        eventRequest: true,
+        eventComment,
+      });
+      if (newEvent) {
+        res.status(200).json(newEvent);
+      } else {
+        res.sataus(500).json({ err: "une erreur c'est produite" });
+      }
+    }
+  },
+
   eventRequest: async (req, res) => {
     const { userId, postId } = req.body;
     const checkRequest = await models.Event.findOne({
@@ -94,16 +119,17 @@ module.exports = {
 
   getAllEvent: async (req, res) => {
     const Events = await models.Event.findAll({
-      where: { eventIsAdmin: false },
+      include: [{ model: models.Post }, { model: models.User }],
     });
-    if (Events) return res.status(200).json({ Events });
+    if (Events) return res.status(200).json(Events);
   },
   editEvent: async (req, res) => {},
 
   deleteEvent: async (req, res) => {
-    const eventId = req.params.id;
+    const postId = req.params.postId;
+    const userId = req.params.userId;
     const deleted = await models.Event.destroy({
-      where: { id: eventId },
+      where: { postId, userId },
     });
     if (deleted) {
       return res.status(200).json({ succes: `Event supprimé` });
@@ -118,7 +144,7 @@ module.exports = {
       where: { userId },
     });
     if (userEvent) {
-      res.status(200).json({ userEvent });
+      res.status(200).json(userEvent);
     }
   },
   getEventByPostId: async (req, res) => {

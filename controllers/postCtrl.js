@@ -115,6 +115,7 @@ module.exports = {
         },
         {
           model: models.Event,
+          include: [{ model: models.User }],
           // attributes: [
           //   "id",
           //   "eventValidation",
