@@ -136,6 +136,47 @@ module.exports = {
         .json({ err: "500 il n'y a pas de post postCtrl.postAll" });
     }
   },
+  getPostbyId: async (req, res) => {
+    const postId = req.params.postId;
+    const postUser = await models.Post.findOne({
+      order: [["postDate", "DESC"]],
+      where: { id: postId },
+      include: [
+        {
+          model: models.Parc,
+          attributes: ["parcName", "id"],
+        },
+        {
+          model: models.category,
+          attributes: ["categoryName", "id"],
+        },
+        {
+          model: models.User,
+          // attributes: ["firstName", "lastName", "userEmail", "id"],
+        },
+        {
+          model: models.Event,
+          include: [{ model: models.User }],
+          // attributes: [
+          //   "id",
+          //   "eventValidation",
+          //   "eventIsAdmin",
+          //   "eventRequest",
+          //   "eventComment",
+          //   "postId",
+          //   "userId",
+          // ],
+        },
+      ],
+    });
+    if (postUser) {
+      res.status(200).json({ post: postUser });
+    } else {
+      res
+        .status(500)
+        .json({ err: "500 il n'y a pas de post postCtrl.postAll" });
+    }
+  },
 
   getPostByCategory: async (req, res) => {
     const categoryId = req.params.id;
@@ -302,10 +343,9 @@ module.exports = {
   },
 
   getAllUserEvent: async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     const returnEventsUser = await models.Post.findAll({
       order: [["postDate", "DESC"]],
-      raw: true,
 
       attributes: [
         "id",

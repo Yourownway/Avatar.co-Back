@@ -95,26 +95,33 @@ module.exports = {
       }
     }
   },
-  eventGetValidation: async (req, res) => {
-    const { postId } = req.body;
-    const getUserRequest = await models.Event.findAll({
-      where: {
-        eventValidation: true,
-        eventIsAdmin: false,
-        postId,
-      },
-      include: [
-        {
-          model: models.User,
+  getAllPostIdUser: async (req, res) => {
+    const { userId } = req.params;
 
-          attributes: ["firstName"],
-        },
-      ],
+    const getPostId = await models.Event.findAll({
+      where: { userId },
+      attributes: ["postId"],
     });
+    if (getPostId) {
+      res.status(200).json(getPostId);
+    } else
+      res
+        .status(500)
+        .json({ err: "vous n'avez crée ou participé a aucun post" });
+  },
+  getAllPostIdUser: async (req, res) => {
+    const { userId } = req.params;
 
-    if (getUserRequest) {
-      res.status(200).json({ UserRequests: getUserRequest });
-    }
+    const getPostId = await models.Event.findAll({
+      where: { userId },
+      attributes: ["postId"],
+    });
+    if (getPostId) {
+      res.status(200).json(getPostId);
+    } else
+      res.status(500).json({
+        err: "vous n'avez crée ou participé a aucun post pour l'instant",
+      });
   },
 
   getAllEvent: async (req, res) => {
@@ -173,54 +180,13 @@ module.exports = {
   },
 
   eventValidate: async (req, res) => {
-    const eventId = req.params.id;
+    const { postId, userId } = req.params;
     const updateData = { eventValidation: true, eventRequest: false };
     const validateUser = await models.Event.update(updateData, {
-      where: { id: eventId },
+      where: { postId, userId },
     });
-    if (newEventRequest) {
-      const returnEventsUser = await models.Post.findAll({
-        order: [["postDate", "DESC"]],
-
-        attributes: [
-          "id",
-          "postName",
-          "postUserRole",
-          "postDescription",
-          "postDate",
-          "postMaxGuest",
-        ],
-        include: [
-          {
-            model: models.Parc,
-            attributes: ["parcName", "id"],
-          },
-          {
-            model: models.category,
-            attributes: ["categoryName", "id"],
-          },
-          {
-            model: models.User,
-            attributes: ["firstName", "lastName", "userEmail", "id"],
-          },
-          {
-            model: models.Event,
-            attributes: [
-              "id",
-              "eventValidation",
-              "eventIsAdmin",
-              "eventRequest",
-              "eventComment",
-              "postId",
-              "userId",
-            ],
-            where: { userId },
-          },
-        ],
-      });
-      if (returnEventsUser) {
-        res.status(200).json(returnEventsUser);
-      }
+    if (updateData) {
+      res.status(200).json(updateData);
     } else res.status(400).json({ err: "une erreur c'est produite" });
   },
 
