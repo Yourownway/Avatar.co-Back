@@ -4,7 +4,15 @@ module.exports = {
   eventRequest: async (req, res) => {
     const { userId, postId } = req.body;
     const checkRequest = await models.Event.findOne({
-      where: { userId, postId },
+      where: {
+        userId,
+        postId,
+        eventRequest: true,
+        eventValidation: false || userId,
+        postId,
+        eventRequest: false,
+        eventValidation: true,
+      },
     });
     if (checkRequest) {
       res.status(500).json({ err: "La requette a deja été faite" });
@@ -17,7 +25,48 @@ module.exports = {
         eventRequest: true,
       });
       if (newEventRequest) {
-        res.status(200).json({ event: newEventRequest });
+        const returnEventsUser = await models.Post.findAll({
+          order: [["postDate", "DESC"]],
+
+          attributes: [
+            "id",
+            "postName",
+            "postUserRole",
+            "postDescription",
+            "postDate",
+            "postMaxGuest",
+          ],
+          include: [
+            {
+              model: models.Parc,
+              attributes: ["parcName", "id"],
+            },
+            {
+              model: models.category,
+              attributes: ["categoryName", "id"],
+            },
+            {
+              model: models.User,
+              attributes: ["firstName", "lastName", "userEmail", "id"],
+            },
+            {
+              model: models.Event,
+              attributes: [
+                "id",
+                "eventValidation",
+                "eventIsAdmin",
+                "eventRequest",
+                "eventComment",
+                "postId",
+                "userId",
+              ],
+              where: { userId },
+            },
+          ],
+        });
+        if (returnEventsUser) {
+          res.status(200).json(returnEventsUser);
+        }
       }
     }
   },
@@ -25,7 +74,7 @@ module.exports = {
     const { postId } = req.body;
     const getUserRequest = await models.Event.findAll({
       where: {
-        eventValidation: false,
+        eventValidation: true,
         eventIsAdmin: false,
         postId,
       },
@@ -69,7 +118,6 @@ module.exports = {
       where: { userId },
     });
     if (userEvent) {
-      console.log("=============================");
       res.status(200).json({ userEvent });
     }
   },
@@ -90,7 +138,7 @@ module.exports = {
       include: [
         {
           model: models.User,
-          attributes: ["firstName", "id"],
+          attributes: ["firstName", "id", "userXp"],
         },
         { model: models.Post },
       ],
@@ -104,26 +152,103 @@ module.exports = {
     const validateUser = await models.Event.update(updateData, {
       where: { id: eventId },
     });
-    if (validateUser) {
-      const getStatus = await models.Event.findOne({
-        where: { id: eventId },
+    if (newEventRequest) {
+      const returnEventsUser = await models.Post.findAll({
+        order: [["postDate", "DESC"]],
+
+        attributes: [
+          "id",
+          "postName",
+          "postUserRole",
+          "postDescription",
+          "postDate",
+          "postMaxGuest",
+        ],
+        include: [
+          {
+            model: models.Parc,
+            attributes: ["parcName", "id"],
+          },
+          {
+            model: models.category,
+            attributes: ["categoryName", "id"],
+          },
+          {
+            model: models.User,
+            attributes: ["firstName", "lastName", "userEmail", "id"],
+          },
+          {
+            model: models.Event,
+            attributes: [
+              "id",
+              "eventValidation",
+              "eventIsAdmin",
+              "eventRequest",
+              "eventComment",
+              "postId",
+              "userId",
+            ],
+            where: { userId },
+          },
+        ],
       });
-      res.status(200).json({ getStatus });
+      if (returnEventsUser) {
+        res.status(200).json(returnEventsUser);
+      }
     } else res.status(400).json({ err: "une erreur c'est produite" });
   },
 
   eventDecline: async (req, res) => {
-    const eventId = req.params.id;
+    const eventId = req.params.eventId;
+    const userId = req.params.userId;
 
     const update = { eventRequest: false };
     const declineUser = await models.Event.update(update, {
       where: { id: eventId },
     });
     if (declineUser) {
-      const getStatus = await models.Event.findOne({
-        where: { id: eventId },
+      const returnEventsUser = await models.Post.findAll({
+        order: [["postDate", "DESC"]],
+
+        attributes: [
+          "id",
+          "postName",
+          "postUserRole",
+          "postDescription",
+          "postDate",
+          "postMaxGuest",
+        ],
+        include: [
+          {
+            model: models.Parc,
+            attributes: ["parcName", "id"],
+          },
+          {
+            model: models.category,
+            attributes: ["categoryName", "id"],
+          },
+          {
+            model: models.User,
+            attributes: ["firstName", "lastName", "userEmail", "id"],
+          },
+          {
+            model: models.Event,
+            attributes: [
+              "id",
+              "eventValidation",
+              "eventIsAdmin",
+              "eventRequest",
+              "eventComment",
+              "postId",
+              "userId",
+            ],
+            where: { userId },
+          },
+        ],
       });
-      res.status(200).json(getStatus);
+      if (returnEventsUser) {
+        res.status(200).json(returnEventsUser);
+      }
     } else res.status(400).json({ err: "une erreur c'est produite" });
   },
 };

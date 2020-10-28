@@ -99,15 +99,7 @@ module.exports = {
   getAllPost: async (req, res) => {
     const postAll = await models.Post.findAll({
       order: [["postDate", "DESC"]],
-      raw: true,
-      attributes: [
-        "id",
-        "postName",
-        "postUserRole",
-        "postDescription",
-        "postDate",
-        "postMaxGuest",
-      ],
+
       include: [
         {
           model: models.Parc,
@@ -119,20 +111,19 @@ module.exports = {
         },
         {
           model: models.User,
-          attributes: ["firstName", "lastName", "userEmail", "id"],
+          // attributes: ["firstName", "lastName", "userEmail", "id"],
         },
         {
           model: models.Event,
-          attributes: [
-            "id",
-            "eventValidation",
-            "eventIsAdmin",
-            "eventRequest",
-            "eventComment",
-            "postId",
-            "userId",
-          ],
-          // where: { eventValidation: true },
+          // attributes: [
+          //   "id",
+          //   "eventValidation",
+          //   "eventIsAdmin",
+          //   "eventRequest",
+          //   "eventComment",
+          //   "postId",
+          //   "userId",
+          // ],
         },
       ],
     });
@@ -187,10 +178,12 @@ module.exports = {
   },
 
   editPost: async (req, res) => {
-    const postId = req.params.id;
+    const postId = req.params.postId;
+    const userId = req.params.userId;
+    console.log(userId, "==========================================");
     try {
       const updatePost = await models.Post.update(req.body, {
-        where: { id: postId },
+        where: { id: postId, userId },
       });
       if (updatePost) {
         const updatedPost = await models.Post.findOne({
@@ -211,7 +204,7 @@ module.exports = {
     }
   },
   deletePost: async (req, res) => {
-    const postId = req.params.id;
+    const postId = req.params.postId;
     const deleted = await models.Post.destroy({
       where: { id: postId },
     });
@@ -300,9 +293,57 @@ module.exports = {
             "postId",
             "userId",
           ],
+          model: models.User,
         },
       ],
     });
     res.status(200).json({ Post });
+  },
+
+  getAllUserEvent: async (req, res) => {
+    const userId = req.params.id;
+    const returnEventsUser = await models.Post.findAll({
+      order: [["postDate", "DESC"]],
+      raw: true,
+
+      attributes: [
+        "id",
+        "postName",
+        "postUserRole",
+        "postDescription",
+        "postDate",
+        "postMaxGuest",
+      ],
+      include: [
+        {
+          model: models.Parc,
+          attributes: ["parcName", "id"],
+        },
+        {
+          model: models.category,
+          attributes: ["categoryName", "id"],
+        },
+        {
+          model: models.User,
+          attributes: ["firstName", "lastName", "userEmail", "id", "userXp"],
+        },
+        {
+          model: models.Event,
+          attributes: [
+            "id",
+            "eventValidation",
+            "eventIsAdmin",
+            "eventRequest",
+            "eventComment",
+            "postId",
+            "userId",
+          ],
+          where: { userId },
+        },
+      ],
+    });
+    if (returnEventsUser) {
+      res.status(200).json(returnEventsUser);
+    }
   },
 };

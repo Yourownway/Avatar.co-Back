@@ -29,7 +29,7 @@ module.exports = {
       attributes: ["userEmail"],
       where: { userEmail: user.userEmail },
     });
-    console.log(user.userEmail);
+
     if (email) {
       return res.status(409).json({ error: `${userEmail} exsiste deja` });
     } else {
@@ -40,7 +40,6 @@ module.exports = {
         if (newUser) {
           res.status(200).json(newUser);
         } else {
-          console.log(err);
           return res
             .status(500)
             .json({ error: "ajout de l'utilisateur impossible" });

@@ -3,15 +3,15 @@ var express = require("express");
 var router = express.Router();
 
 router.post("/post", postCtrl.createPost);
-router.get("/post", postCtrl.getAllPost);
+router.get("/post/allpost", postCtrl.getAllPost); // Training page , tout les posts
 router.get("/post/search", postCtrl.getSearchPost);
 router.get("/post/category/:id", postCtrl.getPostByCategory);
 router.get("/post/rate", postCtrl.getPostByRate);
 router.get("/post/:id", postCtrl.getOnePost);
-router.put("/edit/post/:id", postCtrl.editPost);
-router.delete("/delete/post/:id", postCtrl.deletePost);
+router.patch("/post/:postId/:userId/edit", postCtrl.editPost); //editPost
+router.delete("/post/:postId/delete", postCtrl.deletePost); //deletePost
 router.post("/userPost", postCtrl.getUserPost);
 router.post("/last/post/user", postCtrl.getLastUserPost);
 router.get("/getEvents/post/:id", postCtrl.getEventByPostId);
-
+router.get("/event/:id/getAllPostUser", postCtrl.getAllUserEvent); //PageProfil
 module.exports = router;
