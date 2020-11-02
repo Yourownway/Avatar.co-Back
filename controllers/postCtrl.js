@@ -170,7 +170,7 @@ module.exports = {
       ],
     });
     if (postUser) {
-      res.status(200).json({ post: postUser });
+      res.status(200).json(postUser);
     } else {
       res
         .status(500)
@@ -224,17 +224,15 @@ module.exports = {
     const userId = req.params.userId;
     console.log(userId, "==========================================");
     try {
-      const updatePost = await models.Post.update(req.body, {
+      const update = await models.Post.update(req.body, {
         where: { id: postId, userId },
       });
-      if (updatePost) {
+      if (update) {
         const updatedPost = await models.Post.findOne({
           where: { id: postId },
         });
         console.log(updatedPost);
-        return res
-          .status(200)
-          .json({ proflil: `'post de ${updatedPost.postName} modifié'` });
+        return res.status(200).json(updatedPost);
       } else {
         console.log("==================+++++EDIT+++++++++++++");
         return res
