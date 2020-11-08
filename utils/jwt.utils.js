@@ -45,6 +45,7 @@ module.exports = {
               userXp: userFound.userXp,
               userDescription: userFound.userDescription,
               userPirvate: userFound.userPrivate,
+              userImage: userFound.userImage,
             });
           } else {
             return res.status(500).json({ err: "500 erreur serveur" });

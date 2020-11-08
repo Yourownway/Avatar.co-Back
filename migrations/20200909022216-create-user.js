@@ -25,6 +25,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      userImage: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       userBadge: {
         type: Sequelize.INTEGER,
         allowNull: true,

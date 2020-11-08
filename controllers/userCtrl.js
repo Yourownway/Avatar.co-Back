@@ -1,5 +1,5 @@
 const models = require("../models");
-
+const fs = require("fs");
 const bcrypt = require("bcrypt");
 
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
           "userXp",
           "userBadge",
           "userDescription",
+          "userImage",
         ],
         where: { id: userId },
       });
@@ -31,7 +32,6 @@ module.exports = {
 
   editProfil: async (req, res) => {
     const userId = req.params.id;
-
     bcrypt.hash(req.body.userPassword, 5, async function (err, hash) {
       req.body.userPassword = hash;
       const updateProfil = await models.User.update(req.body, {
@@ -54,6 +54,7 @@ module.exports = {
             "lastName",
             "userEmail",
             "userDescription",
+            "userXp",
           ],
         });
         if (newProfil) {
@@ -61,6 +62,47 @@ module.exports = {
         }
       }
     });
+  },
+  editProfilImg: async (req, res) => {
+    const userId = req.params.id;
+
+    const userImage = req.file.filename;
+    console.log(userImage);
+    try {
+      if (req.file == undefined) {
+        return res
+          .status(400)
+          .json({ err: "vous devez selectionner un fichier" });
+      }
+
+      const imageUpdate = await models.User.update(
+        { userImage },
+        {
+          where: { id: userId },
+        }
+      );
+      if (imageUpdate) {
+        const newProfil = await models.User.findOne({
+          where: { id: userId },
+          attributes: [
+            "id",
+            "firstName",
+            "lastName",
+            "userEmail",
+            "userDescription",
+            "userXp",
+          ],
+        });
+        if (newProfil) {
+          res.status(200).json(newProfil);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(400)
+        .json({ err: `Erreur pendant le chargement de l'image: ${error}` });
+    }
   },
   deleteProfil: async (req, res) => {
     const userId = req.params.id;

@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 const userCtrl = require("../controllers/userCtrl");
 
+const upload = require("../middleware/upload");
+
 const { verifyToken } = require("../middleware/checkToken");
 
 router.get("/checkToken", verifyToken, (req, res) => {
@@ -17,7 +19,13 @@ router.get(
 );
 router.patch(
   "/profil/:id/edit-user",
-  /*security.verifyToken,*/ userCtrl.editProfil
+
+  userCtrl.editProfil
+);
+router.patch(
+  "/profil/:id/edit-image",
+  upload.single("file"),
+  userCtrl.editProfilImg
 );
 router.delete("/profil/:id/delete", verifyToken, userCtrl.deleteProfil);
 

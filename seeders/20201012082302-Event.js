@@ -72,7 +72,7 @@ module.exports = {
           eventisAdmin: false,
           eventValidation: true,
           eventComment: "",
-          eventRequest: true,
+          eventRequest: false,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
