@@ -2,7 +2,7 @@ const models = require("../models");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const JWT_SIGN_SECRET = process.env.TOKEN;
+const ACCESSTOKEN = process.env.ACCESSTOKEN;
 module.exports = {
   generateTokenForUser: (userData) => {
     return jwt.sign(
@@ -10,7 +10,7 @@ module.exports = {
         userId: userData.id,
         userEmail: userData.email,
       },
-      JWT_SIGN_SECRET,
+      ACCESSTOKEN,
       {
         expiresIn: "1h",
       }
@@ -25,7 +25,7 @@ module.exports = {
         err: "401: utilisateur non authentifié",
       });
     } else {
-      jwt.verify(bearerToken, JWT_SIGN_SECRET, async (err, user) => {
+      jwt.verify(bearerToken, ACCESSTOKEN, async (err, user) => {
         if (err) {
           return res
             .status(403)
