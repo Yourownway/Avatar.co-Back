@@ -61,7 +61,7 @@ module.exports = {
       });
 
       if (displayPost) {
-        return res.status(200).json(displayPost);
+        return res.status(200).json(newPost);
       }
     } else {
       console.log("erreur postCtrl create post");
@@ -111,20 +111,34 @@ module.exports = {
         },
         {
           model: models.User,
-          // attributes: ["firstName", "lastName", "userEmail", "id"],
+          attributes: [
+            "firstName",
+            "lastName",
+            "userEmail",
+            "id",
+            "userBadge",
+            "userXp",
+            "userDescription",
+            "userImage",
+          ],
         },
         {
           model: models.Event,
-          include: [{ model: models.User }],
-          // attributes: [
-          //   "id",
-          //   "eventValidation",
-          //   "eventIsAdmin",
-          //   "eventRequest",
-          //   "eventComment",
-          //   "postId",
-          //   "userId",
-          // ],
+          include: [
+            {
+              model: models.User,
+              attributes: [
+                "firstName",
+                "lastName",
+                "userEmail",
+                "id",
+                "userBadge",
+                "userXp",
+                "userDescription",
+                "userImage",
+              ],
+            },
+          ],
         },
       ],
     });
@@ -152,20 +166,34 @@ module.exports = {
         },
         {
           model: models.User,
-          // attributes: ["firstName", "lastName", "userEmail", "id"],
+          attributes: [
+            "firstName",
+            "lastName",
+            "userEmail",
+            "id",
+            "userBadge",
+            "userXp",
+            "userDescription",
+            "userImage",
+          ],
         },
         {
           model: models.Event,
-          include: [{ model: models.User }],
-          // attributes: [
-          //   "id",
-          //   "eventValidation",
-          //   "eventIsAdmin",
-          //   "eventRequest",
-          //   "eventComment",
-          //   "postId",
-          //   "userId",
-          // ],
+          include: [
+            {
+              model: models.User,
+              attributes: [
+                "firstName",
+                "lastName",
+                "userEmail",
+                "id",
+                "userBadge",
+                "userXp",
+                "userDescription",
+                "userImage",
+              ],
+            },
+          ],
         },
       ],
     });
@@ -181,28 +209,48 @@ module.exports = {
   getPostByCategory: async (req, res) => {
     const categoryId = req.params.id;
     const postAll = await models.Post.findAll({
-      limit: 8,
       where: { categoryId },
-      attributes: [
-        "id",
-        "postName",
-        "postUserRole",
-        "postDescription",
-        "postDate",
-        "postMaxGuest",
-      ],
+      order: [["postDate", "DESC"]],
+
       include: [
         {
           model: models.Parc,
-          attributes: ["parcName"],
+          attributes: ["parcName", "id"],
         },
         {
           model: models.category,
-          attributes: ["categoryName"],
+          attributes: ["categoryName", "id"],
         },
         {
           model: models.User,
-          attributes: ["firstName", "lastName", "userEmail"],
+          attributes: [
+            "firstName",
+            "lastName",
+            "userEmail",
+            "id",
+            "userBadge",
+            "userXp",
+            "userDescription",
+            "userImage",
+          ],
+        },
+        {
+          model: models.Event,
+          include: [
+            {
+              model: models.User,
+              attributes: [
+                "firstName",
+                "lastName",
+                "userEmail",
+                "id",
+                "userBadge",
+                "userXp",
+                "userDescription",
+                "userImage",
+              ],
+            },
+          ],
         },
       ],
     });
@@ -222,36 +270,36 @@ module.exports = {
   editPost: async (req, res) => {
     const postId = req.params.postId;
     const userId = req.params.userId;
-    console.log(userId, "==========================================");
-    try {
-      const update = await models.Post.update(req.body, {
-        where: { id: postId, userId },
+
+    const update = await models.Post.update(req.body, {
+      where: { id: postId, userId },
+    });
+    if (update) {
+      const updatedPost = await models.Post.findOne({
+        where: { id: postId },
       });
-      if (update) {
-        const updatedPost = await models.Post.findOne({
-          where: { id: postId },
-        });
-        console.log(updatedPost);
-        return res.status(200).json(updatedPost);
-      } else {
-        console.log("==================+++++EDIT+++++++++++++");
-        return res
-          .status(500)
-          .json({ err: "500 ressource non trouvé postCtrl.editPost" });
-      }
-    } catch (e) {
-      console.log("editPost error", e);
+      console.log(updatedPost);
+      return res.status(200).json(updatedPost);
+    } else {
+      console.log("==================+++++EDIT+++++++++++++");
+      return res
+        .status(500)
+        .json({ err: "500 ressource non trouvé postCtrl.editPost" });
     }
   },
   deletePost: async (req, res) => {
     const postId = req.params.postId;
-    const deleted = await models.Post.destroy({
-      where: { id: postId },
-    });
-    if (deleted) {
-      return res.status(200).json({ succes: `Post supprimé` });
-    } else {
-      return res.status(404).json({ err: "post deja supprimé" });
+    try {
+      const deleted = await models.Post.destroy({
+        where: { id: postId },
+      });
+      if (deleted) {
+        return res.status(200).json({ succes: `Post supprimé` });
+      } else {
+        return res.status(404).json({ err: "post deja supprimé" });
+      }
+    } catch (error) {
+      res.status(500).json(error);
     }
   },
 

@@ -1,5 +1,5 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 const userCtrl = require("../controllers/userCtrl");
 
 const upload = require("../middleware/upload");
@@ -19,6 +19,7 @@ router.get(
 );
 router.patch(
   "/profil/:id/edit-user",
+  verifyToken,
 
   userCtrl.editProfil
 );

@@ -22,13 +22,15 @@ module.exports = {
       },
       eventIsAdmin: {
         type: Sequelize.BOOLEAN,
+        defaultValue: true,
       },
       eventValidation: {
         type: Sequelize.BOOLEAN,
+        defaultValue: true,
       },
       eventRequest: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
       },
       eventComment: {
         defaultValue: null,

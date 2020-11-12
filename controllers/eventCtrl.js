@@ -2,27 +2,31 @@ const models = require("../models");
 
 module.exports = {
   createEvent: async (req, res) => {
-    const { eventComment } = req.body;
-    const { userId, postId } = req.params;
-    const checkPost = await models.Event.findOne({
-      where: { userId, postId },
-    });
-    if (checkPost) {
-      res.status(400).json({ err: "vous avez deja envoyé un post" });
-    } else {
-      const newEvent = await models.Event.create({
-        postId,
-        userId,
-        eventIsAdmin: false,
-        eventValidation: false,
-        eventRequest: true,
-        eventComment,
+    try {
+      const { eventComment } = req.body;
+      const { userId, postId } = req.params;
+      const checkPost = await models.Event.findOne({
+        where: { userId, postId },
       });
-      if (newEvent) {
-        res.status(200).json(newEvent);
+      if (checkPost) {
+        res.status(400).json({ err: "vous avez deja envoyé un post" });
       } else {
-        res.sataus(500).json({ err: "une erreur c'est produite" });
+        const newEvent = await models.Event.create({
+          postId,
+          userId,
+          eventIsAdmin: false,
+          eventValidation: false,
+          eventRequest: true,
+          eventComment,
+        });
+        if (newEvent) {
+          res.status(200).json(newEvent);
+        } else {
+          res.sataus(500).json({ error: "une erreur c'est produite" });
+        }
       }
+    } catch (error) {
+      res.status(500).json(error);
     }
   },
 
@@ -96,18 +100,22 @@ module.exports = {
     }
   },
   getAllPostIdUser: async (req, res) => {
-    const { userId } = req.params;
+    try {
+      const { userId } = req.params;
 
-    const getPostId = await models.Event.findAll({
-      where: { userId },
-      attributes: ["postId"],
-    });
-    if (getPostId) {
-      res.status(200).json(getPostId);
-    } else
-      res
-        .status(500)
-        .json({ err: "vous n'avez crée ou participé a aucun post" });
+      const getPostId = await models.Event.findAll({
+        where: { userId },
+        attributes: ["postId"],
+      });
+      if (getPostId) {
+        res.status(200).json(getPostId);
+      } else
+        res
+          .status(500)
+          .json({ err: "vous n'avez crée ou participé a aucun post" });
+    } catch (error) {
+      res.status(500).json(error);
+    }
   },
   getAllPostIdUser: async (req, res) => {
     const { userId } = req.params;
@@ -133,15 +141,19 @@ module.exports = {
   editEvent: async (req, res) => {},
 
   deleteEvent: async (req, res) => {
-    const postId = req.params.postId;
-    const userId = req.params.userId;
-    const deleted = await models.Event.destroy({
-      where: { postId, userId },
-    });
-    if (deleted) {
-      return res.status(200).json({ succes: `Event supprimé` });
-    } else {
-      return res.status(404).json({ err: "Event deja supprimé" });
+    try {
+      const postId = req.params.postId;
+      const userId = req.params.userId;
+      const deleted = await models.Event.destroy({
+        where: { postId, userId },
+      });
+      if (deleted) {
+        return res.status(200).json({ succes: `Event supprimé` });
+      } else {
+        return res.status(404).json({ error: "Event deja supprimé" });
+      }
+    } catch (error) {
+      return res.status(500).json(error);
     }
   },
 
@@ -180,14 +192,18 @@ module.exports = {
   },
 
   eventValidate: async (req, res) => {
-    const { postId, userId } = req.params;
-    const updateData = { eventValidation: true, eventRequest: false };
-    const validateUser = await models.Event.update(updateData, {
-      where: { postId, userId },
-    });
-    if (updateData) {
-      res.status(200).json(updateData);
-    } else res.status(400).json({ err: "une erreur c'est produite" });
+    try {
+      const { postId, userId } = req.params;
+      const updateData = { eventValidation: true, eventRequest: false };
+      const validateUser = await models.Event.update(updateData, {
+        where: { postId, userId },
+      });
+      if (validateUser) {
+        res.status(200).json(updateData);
+      } else res.status(400).json({ err: "une erreur c'est produite" });
+    } catch (error) {
+      res.status(500).json(error);
+    }
   },
 
   eventDecline: async (req, res) => {

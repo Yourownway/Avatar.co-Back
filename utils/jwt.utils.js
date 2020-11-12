@@ -1,31 +1,50 @@
 const models = require("../models");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
-const ACCESSTOKEN = process.env.ACCESSTOKEN;
+const COOKIETOKEN = process.env.COOKIETOKEN;
+const STORAGETOKEN = process.env.STORAGETOKEN;
 module.exports = {
-  generateTokenForUser: (userData) => {
+  generateStorageToken: (userData) => {
     return jwt.sign(
       {
         userId: userData.id,
-        userEmail: userData.email,
       },
-      ACCESSTOKEN,
+      STORAGETOKEN,
       {
         expiresIn: "1h",
       }
     );
   },
-
+  generateCookieToken: (userData) => {
+    return jwt.sign(
+      {
+        userId: userData.id,
+      },
+      COOKIETOKEN
+    );
+  },
   loadUser: (req, res) => {
+    const CookieToken = req.cookies.Cookie_token;
+    if (!req.cookies || !CookieToken) {
+      return res.status(401).json({ error: "utilisateur non authentifié" });
+    }
+    jwt.verify(CookieToken, COOKIETOKEN, async (err, user) => {
+      if (err) {
+        return res
+          .status(403)
+          .json({ err: "403: accès refusé token invalide" });
+      }
+    });
+
     const bearerHeader = req.headers["authorization"];
     const bearerToken = bearerHeader.split(" ")[1];
+
     if (typeof bearerToken == "undefined" && bearerToken == null) {
       return (res.status(401).jso(req, res, next) = {
-        err: "401: utilisateur non authentifié",
+        error: "401: utilisateur non authentifié",
       });
     } else {
-      jwt.verify(bearerToken, ACCESSTOKEN, async (err, user) => {
+      jwt.verify(bearerToken, STORAGETOKEN, async (err, user) => {
         if (err) {
           return res
             .status(403)

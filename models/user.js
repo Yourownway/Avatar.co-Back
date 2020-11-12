@@ -14,17 +14,17 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
         },
       });
-      // User.hasMany(models.Event, {
-      //   foreignKey: { name: "userId", allowNull: false },
-      // });
 
-      //Super Many-to-Many
       User.belongsToMany(models.Post, {
         through: "Event",
         foreignKey: "userId",
       });
       User.hasMany(models.Event, {
         foreignKey: "userId",
+        references: {
+          model: "Users",
+          key: "id",
+        },
       });
     }
   }

@@ -4,15 +4,14 @@ const bodyParser = require("body-parser");
 const port = 3000;
 const cors = require("cors");
 const router = require("./routes/routes.js");
-const multer = require("multer");
+const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
 global.__basedir = __dirname;
-// const corsOptions = {
-//   origin: "http://localhost:3007",
-// };
-// const storage = multer.diskStorage({destination})
-app.use(cors());
 // middleware
+app.use(helmet());
+app.use(cors());
 app.use(express.static("assets/uploads/"));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
