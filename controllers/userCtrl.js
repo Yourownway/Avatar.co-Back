@@ -91,6 +91,7 @@ module.exports = {
             "userEmail",
             "userDescription",
             "userXp",
+            "userImage",
           ],
         });
         if (newProfil) {

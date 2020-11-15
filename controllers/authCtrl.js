@@ -95,6 +95,7 @@ module.exports = {
               userXp: userFound.userXp,
               userDescription: userFound.userDescription,
               userPirvate: userFound.userPrivate,
+              userImage: userFound.userImage,
               Token: jwtUtils.generateStorageToken(userFound),
             });
           }
