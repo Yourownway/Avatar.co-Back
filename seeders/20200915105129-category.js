@@ -26,7 +26,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          categoryName: "Thai-Chi",
+          categoryName: "Tai-Chi",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
