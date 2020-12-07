@@ -28,10 +28,12 @@ module.exports = {
       userImage: {
         type: Sequelize.STRING,
         allowNull: true,
+        defaultValue: "sport-america.png",
       },
       userBadge: {
         type: Sequelize.INTEGER,
         allowNull: true,
+        defaultValue: 1,
       },
       userPrivate: {
         type: Sequelize.BOOLEAN,
@@ -40,6 +42,7 @@ module.exports = {
       userXp: {
         type: Sequelize.INTEGER,
         allowNull: true,
+        defaultValue: 0,
       },
       userDescription: {
         type: Sequelize.STRING,

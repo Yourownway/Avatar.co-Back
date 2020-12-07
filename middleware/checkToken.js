@@ -8,7 +8,6 @@ const COOKIETOKEN = process.env.COOKIETOKEN;
 module.exports = {
   verifyToken: (req, res, next) => {
     const CookieToken = req.cookies.Cookie_token;
-    console.log(CookieToken);
     if (!req.cookies || !CookieToken) {
       return res.status(401).json({ error: "utilisateur non authentifié" });
     }

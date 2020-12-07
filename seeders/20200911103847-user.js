@@ -16,8 +16,8 @@ module.exports = {
           firstName: "Lorris",
           lastName: "Dhedin",
           userPassword: hash,
-          UserBadge: "4",
-          UserXp: "4500",
+          UserBadge: "5",
+          UserXp: "5500",
           UserDescription:
             "Salut moi c'est Lorris. Fan de course à pied j'organise souvent des footing vers le Parc de Sceaux pour le Plaisir de tous ! ",
           UserPrivate: false,
@@ -30,8 +30,8 @@ module.exports = {
           firstName: "Jimi",
           lastName: "Adelay",
           userPassword: hash,
-          UserBadge: "5",
-          UserXp: "5000",
+          UserBadge: "2",
+          UserXp: "2100",
           UserDescription:
             "Bonjour à tous , je m'appel Jimi. Je pratique le Tai-chi-chuan depuis bientot 10ans. Je vous accompagne lors de seance d'initiation",
           UserPrivate: false,
@@ -86,8 +86,8 @@ module.exports = {
           firstName: "Yassin",
           lastName: "Lck",
           userPassword: hash,
-          UserBadge: "4",
-          UserXp: "4500",
+          UserBadge: "3",
+          UserXp: "2500",
           UserDescription:
             "Bonjour, je m'appel Yassin. Je pratique le Workout principalement depuis que les salles de sport ont fermés",
           UserPrivate: false,
@@ -100,8 +100,8 @@ module.exports = {
           firstName: "Coline",
           lastName: "Supercool",
           userPassword: hash,
-          UserBadge: "2",
-          UserXp: "2500",
+          UserBadge: "1",
+          UserXp: "200",
           UserDescription:
             "Hello , moi c'est Coline. J'ai repris le sport grace à cette aplication que je trouve super cool. J'aime le sport et la natation . A bientot +",
           UserPrivate: false,

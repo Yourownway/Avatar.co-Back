@@ -76,6 +76,16 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          userId: "20",
+          postId: "1",
+          eventisAdmin: false,
+          eventValidation: true,
+          eventComment: "",
+          eventRequest: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
         //utilisateur en attente
         {
           userId: "10",
@@ -83,6 +93,16 @@ module.exports = {
           eventisAdmin: false,
           eventValidation: false,
           eventComment: "",
+          eventRequest: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: "20",
+          postId: "1",
+          eventisAdmin: false,
+          eventValidation: false,
+          eventComment: "Salut j'aimerais participer à ton Footing !",
           eventRequest: true,
           createdAt: new Date(),
           updatedAt: new Date(),

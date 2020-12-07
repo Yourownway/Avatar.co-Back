@@ -10,7 +10,6 @@ module.exports = {
     let user = ({ firstName, lastName, userEmail, userPassword } = req.body);
 
     for (const property in user) {
-      console.log(user);
       if (
         !user[property] ||
         user[property] == null ||
@@ -47,15 +46,21 @@ module.exports = {
     } else {
       bcrypt.hash(user.userPassword, 5, async function (err, hash) {
         user.userPassword = hash;
-        const addUser = await models.User.create(user);
-        if (addUser) {
-          res
-            .status(200)
-            .json({ success: `Bienvenue à toi ${addUser.firstName}` });
-        } else {
-          return res
-            .status(500)
-            .json({ error: "ajout de l'utilisateur impossible" });
+        try {
+          const addUser = await models.User.create(user);
+
+          if (addUser) {
+            res
+              .status(200)
+              .json({ success: `Bienvenue à toi ${addUser.firstName}` });
+          } else {
+            return res
+              .status(500)
+              .json({ error: "ajout de l'utilisateur impossible" });
+          }
+        } catch (error) {
+          console.log(error);
+          res.status(500).json(error);
         }
       });
     }

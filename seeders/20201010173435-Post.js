@@ -9,7 +9,7 @@ module.exports = {
           postName: "Footing au Parc de Sceaux", //STRING
           postUserRole: "user", //STRING,
           postDescription:
-            "Salut à tous et a toutes , je vais courir au parc de Sceau comme tout les Samedi, que ce qui m'aime me suive ! ", //STRING,
+            "Salut à tous et a toutes , je vais courir au parc de Sceaux comme tout les Samedi, que ce qui m'aime me suive ! ", //STRING,
           postDate: new Date(Date.UTC(2020, 11, 22, 10, 30)), //DATE
 
           postMaxGuest: "5", //INTEGER
@@ -63,7 +63,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          postName: "Initiation au Thai-chi", //STRING
+          postName: "Initiation au Tai-chi", //STRING
           postUserRole: "user", //STRING,
           postDescription:
             "Bonjour , je pratique le Thai chi depuis bientot 10 ans et je souhaite vous initiez à cet art, debutant accepté ! ", //STRING,
